@@ -1,24 +1,34 @@
-import logo from './logo.svg';
-import './App.css';
+// src/App.js
+import React from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import Hero from './components/Hero';
+import AboutAndSkills from './components/AboutAndSkills'; 
+import Projects from './components/Projects';
+import Experience from './components/Experience';
+import ContactForm from './components/ContactForm';
+import LiveDemoPage from './pages/LiveDemoPage'; // Import the Live Demo page component
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <Routes>
+        {/* Main Portfolio Page */}
+        <Route
+          path="/"
+          element={
+            <>
+              <Hero />
+              <AboutAndSkills /> 
+              <Experience />
+              <Projects />
+              <ContactForm />
+            </>
+          }
+        />
+        {/* Live Demo Page */}
+        <Route path="/live-demo" element={<LiveDemoPage />} />
+      </Routes>
+    </Router>
   );
 }
 

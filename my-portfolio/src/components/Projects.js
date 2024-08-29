@@ -1,74 +1,71 @@
-// src/components/Projects.js
 import React from 'react';
 import styled from 'styled-components';
 
-const ProjectsContainer = styled.div`
-  padding: 100px 20px;
-  background: #1e1e1e; /* Dark background */
-  color: white;
-`;
-
-const ProjectsContent = styled.div`
-  max-width: 1200px;
-  margin: 0 auto;
-  text-align: center;
+const ProjectsContainer = styled.section`
+  padding: 100px 150px;
+  background: ${({ theme }) => theme.colors.secondaryBackground};
 `;
 
 const ProjectsTitle = styled.h2`
-  font-size: 3rem;
+  font-size: 2.5rem;
+  color: ${({ theme }) => theme.colors.heading};
   margin-bottom: 20px;
-  color: #bb86fc;
 `;
 
-const ProjectsGrid = styled.div`
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 20px;
+const ProjectItem = styled.div`
+  margin-bottom: 40px;
 `;
 
-const ProjectCard = styled.div`
-  background: #232323; /* Darker card background */
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  &:hover {
-    transform: translateY(-5px);
-    box-shadow: 0px 0px 15px rgba(187, 134, 252, 0.5);
-  }
-`;
-
-const ProjectTitle = styled.h3`
+const ProjectName = styled.h3`
   font-size: 1.5rem;
-  margin-bottom: 10px;
-  color: #ffffff;
+  color: ${({ theme }) => theme.colors.subheading};
 `;
 
 const ProjectDescription = styled.p`
-  font-size: 1.2rem;
-  color: #e0e0e0;
+  font-size: 1rem;
+  color: ${({ theme }) => theme.colors.text};
+`;
+
+const Technologies = styled.p`
+  font-size: 0.9rem;
+  color: ${({ theme }) => theme.colors.text};
 `;
 
 const Projects = () => {
-  const projectList = [
-    { name: 'Project One', description: 'A cool project about X' },
-    { name: 'Project Two', description: 'An awesome project about Y' },
+  const projects = [
+    {
+      name: 'Pipeline Mapping Application',
+      description: 'Created an interactive pipeline map using ReactJS, improving public accessibility to critical data.',
+      technologies: 'ReactJS, JavaScript, CSS, HTML',
+    },
+    {
+      name: 'Dummy E-commerce Site',
+      description: 'Developed a dummy e-commerce website utilizing PHP and MySQL, demonstrating full-stack development skills.',
+      technologies: 'PHP, MySQL, HTML, CSS, JavaScript',
+    },
+    {
+      name: 'C# Applications',
+      description: 'Developed various C# applications for internal use, enhancing operational workflows.',
+      technologies: 'C#, .NET, SQL Server',
+    },
+    {
+      name: 'Full-Stack Web Applications with Django',
+      description: 'Developed and deployed 5 full-stack web applications using Django, improving internal workflows.',
+      technologies: 'Django, Python, JavaScript, HTML, CSS',
+    },
     // Add more projects as needed
   ];
 
   return (
     <ProjectsContainer>
-      <ProjectsContent>
-        <ProjectsTitle>My Projects</ProjectsTitle>
-        <ProjectsGrid>
-          {projectList.map((project, index) => (
-            <ProjectCard key={index}>
-              <ProjectTitle>{project.name}</ProjectTitle>
-              <ProjectDescription>{project.description}</ProjectDescription>
-            </ProjectCard>
-          ))}
-        </ProjectsGrid>
-      </ProjectsContent>
+      <ProjectsTitle>Projects</ProjectsTitle>
+      {projects.map((project, index) => (
+        <ProjectItem key={index}>
+          <ProjectName>{project.name}</ProjectName>
+          <ProjectDescription>{project.description}</ProjectDescription>
+          <Technologies><strong>Technologies:</strong> {project.technologies}</Technologies>
+        </ProjectItem>
+      ))}
     </ProjectsContainer>
   );
 };

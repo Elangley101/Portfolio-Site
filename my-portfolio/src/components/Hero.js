@@ -1,60 +1,97 @@
-// src/components/Hero.js
 import React from 'react';
 import styled from 'styled-components';
-//import headshot from '../assets/headshot.jpg'; // Make sure to have your headshot image in the correct path
+import Particles from 'react-tsparticles';
+import { ReactTyped } from 'react-typed';
 
-const HeroContainer = styled.div`
+
+
+const HeroContainer = styled.section`
   position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   height: 100vh;
-  background: linear-gradient(135deg, #1f1f1f, #232323);
-  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 150px;
+  background: ${({ theme }) => theme.colors.background};
 `;
 
 const HeroContent = styled.div`
-  text-align: center;
-  z-index: 1;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
 `;
 
-const HeroTitle = styled.h1`
+const Name = styled.h2`
+  color: ${({ theme }) => theme.colors.heading};
   font-size: 4rem;
-  margin-bottom: 1rem;
-  color: #bb86fc;
-  font-weight: 700;
-  @media (max-width: 768px) {
-    font-size: 2.5rem;
-  }
+  margin: 0;
 `;
 
-const HeroSubtitle = styled.h2`
+const Tagline = styled.div`
+  color: ${({ theme }) => theme.colors.primary};
   font-size: 2rem;
-  font-weight: 300;
-  color: #e0e0e0;
-  @media (max-width: 768px) {
-    font-size: 1.5rem;
+  margin-top: 20px;
+`;
+
+const HeadshotContainer = styled.div`
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const Headshot = styled.img`
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 5px solid ${({ theme }) => theme.colors.primary};
+  transition: transform 0.3s ease;
+  &:hover {
+    transform: scale(1.05);
   }
 `;
 
-const HeadshotImage = styled.img`
-  width: 150px;
-  height: 150px;
-  border-radius: 50%;
-  margin-bottom: 20px;
-  border: 4px solid #bb86fc; /* Adds a nice accent color border */
-  object-fit: cover;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+const ParticlesWrapper = styled.div`
+  position: absolute;
+  width: 100%;
+  height: 100%;
 `;
 
 const Hero = () => {
   return (
     <HeroContainer>
+      <ParticlesWrapper>
+        <Particles
+          options={{
+            particles: {
+              number: { value: 50 },
+              color: { value: '#ffffff' },
+              line_linked: { color: '#ffffff' },
+            },
+          }}
+        />
+      </ParticlesWrapper>
       <HeroContent>
-        <HeadshotImage  alt="Ethan Langley" />
-        <HeroTitle>Ethan Langley</HeroTitle>
-        <HeroSubtitle>Junior Software Developer</HeroSubtitle>
+        <Name>Ethan Langley</Name>
+        <Tagline>
+          <ReactTyped
+            strings={[
+              "I am a Developer.",
+              "I am a Designer.",
+              "I am Ethan Langley."
+            ]}
+            typeSpeed={40}
+            backSpeed={50}
+            loop
+          />
+        </Tagline>
       </HeroContent>
+      <HeadshotContainer>
+        <Headshot src="../img/Hero_pic.jpg" alt="Ethan Langley Headshot" />
+      </HeadshotContainer>
     </HeroContainer>
   );
 };

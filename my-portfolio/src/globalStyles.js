@@ -2,42 +2,31 @@
 import { createGlobalStyle } from 'styled-components';
 
 const GlobalStyle = createGlobalStyle`
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
   body {
-    margin: 0;
-    font-family: 'Roboto', sans-serif;
-    background: #121212; /* Dark background */
-    color: #e0e0e0; /* Light grey text */
-    overflow-x: hidden;
-  }
-
-  h1, h2, h3, h4, h5, h6 {
-    margin: 0;
-    font-family: 'Roboto', sans-serif;
-    color: #ffffff; /* White text for headings */
-  }
-
-  p {
+    background: ${({ theme }) => theme.colors.background}; // Ensure this references the correct theme object
+    color: ${({ theme }) => theme.colors.text};
+    font-family: ${({ theme }) => theme.fonts.body};
     line-height: 1.6;
   }
 
-  a {
-    color: #bb86fc; /* Muted purple for links */
-    text-decoration: none;
-    &:hover {
-      color: #bb86fc;
-    }
+  h1, h2, h3, h4, h5, h6 {
+    color: ${({ theme }) => theme.colors.heading};
+    font-family: ${({ theme }) => theme.fonts.heading};
   }
 
-  button {
-    background-color: #bb86fc;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
+  a {
+    color: ${({ theme }) => theme.colors.primary};
+    text-decoration: none;
+    transition: color 0.3s ease;
+
     &:hover {
-      background-color: #3700b3;
+      color: ${({ theme }) => theme.colors.text};
     }
   }
 `;

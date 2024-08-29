@@ -1,90 +1,42 @@
-// src/components/ContactForm.js
 import React from 'react';
 import styled from 'styled-components';
 
-const ContactContainer = styled.div`
-  padding: 100px 20px;
-  background: #1e1e1e; /* Dark background */
-  color: white;
-  text-align: center;
+const ContactContainer = styled.section`
+  padding: 100px 150px;
+  background: ${({ theme }) => theme.colors.background};
 `;
 
-const ContactFormWrapper = styled.form`
-  max-width: 600px;
-  margin: 0 auto;
-  background: #232323; /* Slightly darker form background */
-  padding: 30px;
-  border-radius: 10px;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
-`;
-
-const FormField = styled.div`
+const ContactTitle = styled.h2`
+  font-size: 2.5rem;
+  color: ${({ theme }) => theme.colors.heading};
   margin-bottom: 20px;
-  text-align: left;
 `;
 
-const Label = styled.label`
-  display: block;
+const ContactInfo = styled.div`
   font-size: 1.2rem;
-  margin-bottom: 10px;
-  color: #bb86fc;
+  color: ${({ theme }) => theme.colors.text};
 `;
 
-const Input = styled.input`
-  width: 100%;
-  padding: 10px;
-  font-size: 1rem;
-  border-radius: 5px;
-  border: 1px solid #ccc;
-  background: #1f1f1f; /* Dark input background */
-  color: white;
-`;
-
-const TextArea = styled.textarea`
-  width: 100%;
-  padding: 10px;
-  font-size: 1rem;
-  border-radius: 5px;
-  border: 1px solid #ccc;
-  background: #1f1f1f; /* Dark input background */
-  color: white;
-  height: 150px;
-`;
-
-const SubmitButton = styled.button`
-  padding: 10px 20px;
-  font-size: 1.2rem;
-  background-color: #bb86fc;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
+const ContactLink = styled.a`
+  color: ${({ theme }) => theme.colors.link};
+  text-decoration: none;
   &:hover {
-    background-color: #3700b3;
+    text-decoration: underline;
   }
 `;
 
-const ContactForm = () => {
+const Contact = () => {
   return (
     <ContactContainer>
-      <h2>Contact Me</h2>
-      <ContactFormWrapper>
-        <FormField>
-          <Label>Name</Label>
-          <Input type="text" placeholder="Your Name" />
-        </FormField>
-        <FormField>
-          <Label>Email</Label>
-          <Input type="email" placeholder="Your Email" />
-        </FormField>
-        <FormField>
-          <Label>Message</Label>
-          <TextArea placeholder="Your Message"></TextArea>
-        </FormField>
-        <SubmitButton type="submit">Send Message</SubmitButton>
-      </ContactFormWrapper>
+      <ContactTitle>Contact</ContactTitle>
+      <ContactInfo>
+        <p>Email: <ContactLink href="mailto:elangley101@gmail.com">elangley101@gmail.com</ContactLink></p>
+        <p>Phone: <ContactLink href="tel:3045469256">304.546.9256</ContactLink></p>
+        <p>LinkedIn: <ContactLink href="https://linkedin.com/in/ethan-langley-44849b249/" target="_blank" rel="noopener noreferrer">linkedin.com/in/ethan-langley-44849b249/</ContactLink></p>
+        <p>Address: 1 St George Blvd, Savannah GA, USA, 31419</p>
+      </ContactInfo>
     </ContactContainer>
   );
 };
 
-export default ContactForm;
+export default Contact;

@@ -1,89 +1,82 @@
-// src/components/Experience.js
 import React from 'react';
 import styled from 'styled-components';
+import CustomList from './CustomList';
 
-const ExperienceContainer = styled.div`
-  padding: 100px 20px;
-  background: #121212; /* Dark background */
-  color: white;
-`;
-
-const ExperienceContent = styled.div`
-  max-width: 1200px;
-  margin: 0 auto;
-  text-align: center;
+const ExperienceContainer = styled.section`
+  padding: 100px 150px;
+  background: ${({ theme }) => theme.colors.background};
 `;
 
 const ExperienceTitle = styled.h2`
-  font-size: 3rem;
+  font-size: 2.5rem;
+  color: ${({ theme }) => theme.colors.heading};
   margin-bottom: 20px;
-  color: #bb86fc;
 `;
 
-const ExperienceGrid = styled.div`
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 20px;
-`;
-
-const ExperienceCard = styled.div`
-  background: #1f1f1f; /* Dark card background */
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  &:hover {
-    transform: translateY(-5px);
-    box-shadow: 0px 0px 15px rgba(187, 134, 252, 0.5);
-  }
+const ExperienceItem = styled.div`
+  margin-bottom: 40px;
 `;
 
 const JobTitle = styled.h3`
   font-size: 1.5rem;
-  margin-bottom: 10px;
-  color: #ffffff;
+  color: ${({ theme }) => theme.colors.subheading};
 `;
 
-const CompanyName = styled.h4`
+const Company = styled.p`
   font-size: 1.2rem;
-  margin-bottom: 10px;
-  color: #bb86fc;
+  color: ${({ theme }) => theme.colors.text};
+  margin: 5px 0;
 `;
 
-const JobDescription = styled.p`
-  font-size: 1.2rem;
-  color: #e0e0e0;
+const Duration = styled.p`
+  font-size: 1rem;
+  color: ${({ theme }) => theme.colors.text};
+  margin: 5px 0;
 `;
 
 const Experience = () => {
-  const experienceList = [
+  const experiences = [
     {
-      title: 'Junior Developer',
-      company: 'TechCorp',
-      description: 'Developed new features for the company’s web platform.',
+      jobTitle: 'Junior Software Engineer',
+      company: "Parkers Kitchen",
+      location: "Savannah, GA",
+      duration: "July 2023 - Present",
+      description: [
+        "Oversee kitchen ticketing system, implementing real-time monitoring to ensure smooth operations and high user satisfaction.",
+        "Implement AWS RDS updates, using automated deployment scripts to enhance menu responsiveness across multiple locations.",
+        "Develop full-stack web applications using Django, successfully deploying 5 projects that improved internal workflows.",
+        "Engage in agile development, delivering weekly MVPs, resulting in a 15% increase in team productivity.",
+        "Utilize Docker tools to streamline deployment processes, reducing deployment time by 30% and boosting operational efficiency.",
+        "Increased system uptime by 20% through strategic backend optimizations and proactive troubleshooting, reducing downtime significantly.",
+      ],
     },
     {
-      title: 'Intern',
-      company: 'WebStart',
-      description: 'Assisted in frontend development and UI design.',
+      jobTitle: 'Application Developer Intern',
+      company: "TC Energy",
+      location: "Charleston, WV",
+      duration: "May 2022 - Dec 2022",
+      description: [
+        "Spearhead development of cutting-edge full-stack web applications, driving operational efficiency and enhancing user experience across multiple locations.",
+        "Managed IT service requests, using a ticketing system to ensure 95% of issues were resolved within 24 hours, enhancing operational efficiency.",
+        "Resolved RSA token issues, implementing a secure protocol that enhanced system security and user access control by 25%.",
+        "Developed web applications using ReactJS, employing modular design patterns to ensure maintainability, with one application still in use on the company website.",
+        "Collaborated with team members nationwide via Microsoft Teams and in-person meetings, improving project delivery times by 20%.",
+        "Assisted in deploying internal tools, using continuous integration pipelines to improve business processes and boost productivity by 15%.",
+      ],
     },
-    // Add more experience as needed
   ];
 
   return (
     <ExperienceContainer>
-      <ExperienceContent>
-        <ExperienceTitle>My Experience</ExperienceTitle>
-        <ExperienceGrid>
-          {experienceList.map((experience, index) => (
-            <ExperienceCard key={index}>
-              <JobTitle>{experience.title}</JobTitle>
-              <CompanyName>{experience.company}</CompanyName>
-              <JobDescription>{experience.description}</JobDescription>
-            </ExperienceCard>
-          ))}
-        </ExperienceGrid>
-      </ExperienceContent>
+      <ExperienceTitle>Employment History</ExperienceTitle>
+      {experiences.map((exp, index) => (
+        <ExperienceItem key={index}>
+          <JobTitle>{exp.jobTitle}</JobTitle>
+          <Company>{`${exp.company}, ${exp.location}`}</Company>
+          <Duration>{exp.duration}</Duration>
+          <CustomList items={exp.description} />
+        </ExperienceItem>
+      ))}
     </ExperienceContainer>
   );
 };

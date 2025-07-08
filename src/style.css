@@ -392,13 +392,14 @@ button:focus {
 
 /* About Section */
 .home-about-section {
-  background-color: var(--background-color);
-  padding: 60px 0;
-  text-align: center;
+  padding: 80px 0;
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+  position: relative;
+  color: white;
 }
 
 .home-about-description {
-  color: var(--text-color);
+  color: white;
   padding-top: 50px;
   padding-bottom: 20px;
 }
@@ -1091,4 +1092,9 @@ canvas {
 .your-content-class {
   z-index: 1;
   position: relative;
+}
+body, .home-section {
+  background: linear-gradient(135deg, #2a2a72 0%, #009ffd 100%) !important;
+  /* Or use your preferred dark blue/purple gradient */
+  color: #f3f3f3;
 }

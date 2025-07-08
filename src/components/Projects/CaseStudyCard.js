@@ -6,19 +6,24 @@ function CaseStudyCard({ title, summary, problem, role, technologies, solution, 
       <h2>{title}</h2>
       
       {note && (
-        <div style={{
-          background: "rgba(102, 126, 234, 0.05)",
-          padding: "8px 12px",
-          borderRadius: "6px",
-          marginBottom: "16px",
-          border: "1px solid rgba(102, 126, 234, 0.2)",
-          fontSize: "0.85rem",
-          color: "var(--text-color)",
-          opacity: 0.8
-        }}>
-          📋 {note}
-        </div>
-      )}
+  <div style={{
+    background: "linear-gradient(90deg, #667eea 0%, #764ba2 100%)",
+    color: "#fff",
+    padding: "12px 18px",
+    borderRadius: "8px",
+    marginBottom: "18px",
+    border: "2px solid #a259ff",
+    fontSize: "1.05rem",
+    fontWeight: 600,
+    boxShadow: "0 2px 12px rgba(102,126,234,0.12)",
+    letterSpacing: "0.01em",
+    display: "flex",
+    alignItems: "center",
+    gap: "8px"
+  }}>
+    📋 {note}
+  </div>
+)}
       
       <h3>Project Summary</h3>
       <p>{summary}</p>

@@ -1,0 +1,46 @@
+{
+  "rewrites": [
+    {
+      "source": "/(cgi-sys|cgi-bin|suspendedpage)(.*)",
+      "destination": "/404"
+    },
+    {
+      "source": "/vm",
+      "destination": "/404"
+    },
+    {
+      "source": "/vm/(.*)",
+      "destination": "/404"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/"
+    }
+  ],
+  "redirects": [
+    {
+      "source": "/cgi-sys/suspendedpage.cgi",
+      "destination": "/404",
+      "permanent": false
+    }
+  ],
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "all"
+        },
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "strict-origin-when-cross-origin"
+        }
+      ]
+    }
+  ]
+}

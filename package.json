@@ -1,50 +1,43 @@
 {
-  "name": "portfolio",
-  "version": "0.1.0",
+  "name": "ethanlangley-dev",
+  "version": "1.0.0",
   "private": true,
-  "homepage": "https://ethanlangley.dev/",
-  "dependencies": {
-    "@react-pdf/renderer": "^2.2.0",
-    "@testing-library/jest-dom": "^5.16.2",
-    "@testing-library/react": "^12.1.4",
-    "@testing-library/user-event": "^13.5.0",
-    "axios": "^0.26.1",
-    "bootstrap": "^5.1.3",
-    "react": "^17.0.2",
-    "react-bootstrap": "^2.2.1",
-    "react-dom": "^17.0.2",
-    "react-github-calendar": "^3.2.2",
-    "react-icons": "^4.8.0",
-    "react-parallax-tilt": "^1.7.42",
-    "react-pdf": "^5.7.1",
-    "react-router-dom": "^6.2.2",
-    "react-scripts": "5.0.0",
-    "react-tsparticles": "^1.42.2",
-    "typewriter-effect": "^2.18.2",
-    "web-vitals": "^2.1.4"
-  },
+  "description": "Consulting site for Ethan Langley — fractional data engineering and data platform consulting.",
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "typecheck": "tsc --noEmit",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "verify": "npm run format:check && npm run lint && npm run typecheck && npm run build"
   },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
+  "dependencies": {
+    "@vercel/analytics": "^1.4.1",
+    "next": "^16.2.12",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
   },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4.0.0",
+    "@types/node": "^22.10.7",
+    "@types/react": "^19.0.7",
+    "@types/react-dom": "^19.0.3",
+    "eslint": "^9.18.0",
+    "eslint-config-next": "^16.2.12",
+    "prettier": "^3.4.2",
+    "prettier-plugin-tailwindcss": "^0.6.10",
+    "tailwindcss": "^4.0.0",
+    "typescript": "^5.7.3"
+  },
+  "overrides": {
+    "postcss": "^8.5.18",
+    "sharp": "^0.35.0",
+    "brace-expansion": "^2.0.2"
+  },
+  "engines": {
+    "node": ">=20"
   }
 }

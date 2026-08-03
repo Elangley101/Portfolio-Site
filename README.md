@@ -1,66 +1,107 @@
-<h2 align="center">
-  Ethan Langley's Portfolio - v2.0<br/>
-  <a href="https://ethanlangley.dev/" target="_blank">ethanlangley.dev</a>
-</h2>
-<div align="center">
-  <img alt="Demo" src="./Images/your-custom-img.png" />
-</div>
+# ethanlangley.dev
 
-<br/>
+Consulting site for **Ethan Langley** — fractional data engineering and data platform
+consulting for startups and growing companies.
 
-<div align="center">
+The primary conversion action is booking a 20-minute discovery call; the secondary
+action is email.
 
-[![forthebadge](https://forthebadge.com/images/badges/built-with-love.svg)](https://forthebadge.com) &nbsp;
-[![forthebadge](https://forthebadge.com/images/badges/made-with-javascript.svg)](https://forthebadge.com) &nbsp;
-[![forthebadge](https://forthebadge.com/images/badges/open-source.svg)](https://forthebadge.com) &nbsp;
-![GitHub Repo stars](https://img.shields.io/github/stars/ethanlangley/Portfolio?color=blue&logo=github&style=for-the-badge) &nbsp;
-![GitHub forks](https://img.shields.io/github/forks/ethanlangley/Portfolio?color=blue&logo=github&style=for-the-badge)
+## Stack
 
-</div>
+| Concern   | Choice                                            |
+| --------- | ------------------------------------------------- |
+| Framework | Next.js 16 (App Router, React 19, Turbopack)      |
+| Language  | TypeScript, strict                                |
+| Styling   | Tailwind CSS v4 with semantic CSS-variable tokens |
+| Fonts     | Inter and JetBrains Mono via `next/font`          |
+| Email     | Resend REST API (optional)                        |
+| Analytics | Vercel Analytics and/or Plausible (both optional) |
+| Hosting   | Vercel                                            |
 
+There are no UI, icon, animation or validation libraries. Icons, motion, form
+validation and rate limiting are all local, which keeps the client bundle small.
 
+## Running locally
 
-## Overview
+```bash
+npm install
+cp .env.example .env.local   # optional; everything works without it
+npm run dev                  # http://localhost:3000
+```
 
-This is my personal portfolio where I showcase some of my GitHub projects, resume, and technical skills.<br/>
+Other scripts:
 
-## Built With
+```bash
+npm run build        # production build
+npm run start        # serve the production build
+npm run lint         # ESLint
+npm run typecheck    # tsc --noEmit
+npm run format       # Prettier write
+npm run verify       # format:check + lint + typecheck + build
+```
 
-- React.js
-- Node.js
-- Express.js
-- CSS3
-- VsCode
-- Vercel
+## Environment variables
 
-## Features
+Every variable is optional — the site builds and runs with none of them set.
+See `.env.example` for the annotated list.
 
-**📖 Multi-Page Layout**
+| Variable                       | Purpose                                                                 |
+| ------------------------------ | ----------------------------------------------------------------------- |
+| `NEXT_PUBLIC_SITE_URL`         | Absolute origin for canonical URLs, Open Graph, sitemap and robots      |
+| `NEXT_PUBLIC_SCHEDULING_URL`   | Booking link. When unset, discovery-call CTAs route to the contact form |
+| `RESEND_API_KEY`               | Enables contact-form email delivery                                     |
+| `CONTACT_FROM_EMAIL`           | Sender address on a domain verified in Resend                           |
+| `CONTACT_TO_EMAIL`             | Recipient; defaults to the address in `src/content/site.ts`             |
+| `NEXT_PUBLIC_ENABLE_ANALYTICS` | `true` turns on Vercel Analytics                                        |
+| `NEXT_PUBLIC_PLAUSIBLE_DOMAIN` | Site domain registered in Plausible                                     |
 
-**🎨 Styled with React-Bootstrap and CSS for easy customization**
+## Editing content
 
-**📱 Fully Responsive**
+All copy lives in `src/content/` so it can be changed without touching components:
 
-## Getting Started
+| File          | Contents                                                      |
+| ------------- | ------------------------------------------------------------- |
+| `site.ts`     | Name, email, location, socials, navigation, SEO copy, resume  |
+| `metrics.ts`  | Headline and supporting numbers                               |
+| `problems.ts` | The "why teams call" section                                  |
+| `services.ts` | The seven services and the three engagement models            |
+| `results.ts`  | Case-study results                                            |
+| `projects.ts` | Long-form project case studies, including architecture stages |
+| `process.ts`  | Engagement stages and working principles                      |
+| `about.ts`    | Biography, facts and fit criteria                             |
 
-To start working on this project, you’ll need to have `node.js` and `git` installed on your machine.
+## Contact form
 
-## 🛠 Installation and Setup
+`POST /api/contact` handles submissions. It applies, in order: a per-IP burst limit
+(30 requests per 10 minutes), a body-size cap, JSON parsing, type coercion, a honeypot
+check, the same validation rules the browser uses (`src/lib/contact-schema.ts`), and
+finally a per-IP send budget (5 per 10 minutes). Only submissions that pass validation
+consume the send budget, so correcting a mistake never locks anyone out.
 
-1. Clone the repo: `git clone https://github.com/ethanlangley/Portfolio.git`
-2. Install dependencies: `npm install`
-3. Start the project: `npm start`
+Delivery degrades gracefully. Without `RESEND_API_KEY` and `CONTACT_FROM_EMAIL` the
+submission is still accepted and logged server-side, and the visitor is shown a
+success message that also asks them to email directly — so a lead is never silently
+lost to a missing credential.
 
-The app will run in development mode, accessible at [http://localhost:3000](http://localhost:3000).
+The rate limiter is in-memory and therefore per serverless instance. If the endpoint
+ever needs a hard guarantee, swap `src/lib/rate-limit.ts` for a shared store such as
+Vercel KV or Upstash.
 
-## Usage Instructions
+## Resume
 
-Navigate to `/src/components/` to edit and customize your portfolio.
+The download button renders only when `public/resume/Ethan-Langley-Resume.pdf`
+exists. See `public/resume/README.md`.
 
-## Show your support
+## Deploying
 
-Give a ⭐ if you like this website! Your feedback is appreciated.
+The project is a standard Next.js app on Vercel.
 
----
+1. Push to `main`.
+2. In the Vercel project, confirm the framework preset is **Next.js** (`vercel.json`
+   already sets it) and that the Node version is 20 or newer.
+3. Add the environment variables you want from the table above.
+4. Deploy.
 
-_**Inspiration credit:** This portfolio structure was inspired by [Soumyajit4419's Portfolio](https://github.com/soumyajit4419/Portfolio)._
+`vercel.json` keeps `X-Robots-Tag: all` and a cache policy for the resume;
+`next.config.ts` owns the security headers and the redirects from the previous
+site's routes (`/project` → `/projects`, `/resume` → `/about`).

@@ -1,0 +1,215 @@
+@import 'tailwindcss';
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+/*
+  Semantic color tokens. Every component references these rather than raw
+  palette values, so the light/dark switch is a single source of truth.
+  Contrast ratios of text tokens against their backgrounds are >= 4.5:1.
+*/
+:root {
+  --bg: #fcfcfb;
+  --bg-muted: #f5f5f3;
+  --surface: #ffffff;
+  --surface-hover: #f7f7f5;
+  --border: #e4e3de;
+  --border-strong: #cfcec7;
+  --fg: #12161b;
+  --fg-muted: #4f5a67;
+  /* 4.98:1 on --bg-muted, the tightest pairing this token is used in. */
+  --fg-subtle: #5f6b78;
+  --accent: #0e7c63;
+  --accent-hover: #0b6350;
+  --accent-contrast: #ffffff;
+  --accent-soft: rgba(14, 124, 99, 0.09);
+  --accent-ring: rgba(14, 124, 99, 0.4);
+  --grid-line: rgba(18, 22, 27, 0.055);
+  --select-arrow: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%235f6b78' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m3 6 5 5 5-5'/%3E%3C/svg%3E");
+  --shadow-sm: 0 1px 2px rgba(18, 22, 27, 0.05);
+  --shadow-md: 0 8px 24px -12px rgba(18, 22, 27, 0.18);
+  --shadow-lg: 0 24px 60px -30px rgba(18, 22, 27, 0.28);
+  color-scheme: light;
+}
+
+.dark {
+  --bg: #0a0c0f;
+  --bg-muted: #0e1116;
+  --surface: #12171e;
+  --surface-hover: #171d25;
+  --border: #222a34;
+  --border-strong: #333e4c;
+  --fg: #e8ecf2;
+  --fg-muted: #97a3b2;
+  --fg-subtle: #78838f;
+  --accent: #4fc3a1;
+  --accent-hover: #6ad3b4;
+  --accent-contrast: #06231c;
+  --accent-soft: rgba(79, 195, 161, 0.11);
+  --accent-ring: rgba(79, 195, 161, 0.45);
+  --grid-line: rgba(232, 236, 242, 0.045);
+  --select-arrow: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%2378838f' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m3 6 5 5 5-5'/%3E%3C/svg%3E");
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 8px 24px -12px rgba(0, 0, 0, 0.6);
+  --shadow-lg: 0 24px 60px -30px rgba(0, 0, 0, 0.8);
+  color-scheme: dark;
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-bg-muted: var(--bg-muted);
+  --color-surface: var(--surface);
+  --color-surface-hover: var(--surface-hover);
+  --color-border-subtle: var(--border);
+  --color-border-strong: var(--border-strong);
+  --color-fg: var(--fg);
+  --color-fg-muted: var(--fg-muted);
+  --color-fg-subtle: var(--fg-subtle);
+  --color-accent: var(--accent);
+  --color-accent-hover: var(--accent-hover);
+  --color-accent-contrast: var(--accent-contrast);
+  --color-accent-soft: var(--accent-soft);
+
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-mono: var(--font-mono-code), ui-monospace, 'SFMono-Regular', Menlo, monospace;
+
+  --shadow-card: var(--shadow-sm);
+  --shadow-raised: var(--shadow-md);
+  --shadow-float: var(--shadow-lg);
+}
+
+@layer base {
+  * {
+    border-color: var(--border);
+  }
+
+  html {
+    scroll-behavior: smooth;
+    /* Offset anchor targets so the sticky header never covers a heading. */
+    scroll-padding-top: 6rem;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background-color: var(--bg);
+    color: var(--fg);
+    font-family: var(--font-sans);
+    font-feature-settings: 'cv02', 'cv03', 'cv04', 'ss01';
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-weight: 600;
+    letter-spacing: -0.022em;
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  ::selection {
+    background: var(--accent-soft);
+    color: var(--fg);
+  }
+}
+
+/* ---------------------------------------------------------------- utilities */
+
+@utility container-page {
+  width: 100%;
+  margin-inline: auto;
+  max-width: 78rem;
+  padding-inline: 1.25rem;
+
+  @media (min-width: 640px) {
+    padding-inline: 2rem;
+  }
+
+  @media (min-width: 1280px) {
+    padding-inline: 2.5rem;
+  }
+}
+
+@utility container-prose {
+  width: 100%;
+  margin-inline: auto;
+  max-width: 46rem;
+}
+
+/* A faint engineering grid. Purely decorative, never behind body copy. */
+@utility bg-grid {
+  background-image:
+    linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
+  background-size: 64px 64px;
+}
+
+@utility eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  line-height: 1;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--fg-subtle);
+}
+
+@utility rule-x {
+  background-image: linear-gradient(to right, transparent, var(--border), transparent);
+  height: 1px;
+  width: 100%;
+}
+
+/* ----------------------------------------------------------------- motion */
+
+@keyframes reveal-up {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.reveal {
+  opacity: 0;
+}
+
+.reveal[data-visible='true'] {
+  animation: reveal-up 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  animation-delay: var(--reveal-delay, 0ms);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .reveal,
+  .reveal[data-visible='true'] {
+    opacity: 1;
+    animation: none;
+    transform: none;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
